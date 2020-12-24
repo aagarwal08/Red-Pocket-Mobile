@@ -6,6 +6,7 @@
  * @flow strict-local
  */
 
+ import SplashScreen from './splash';
 import  React, {Component} from 'react';
 import {
   SafeAreaView,
@@ -26,9 +27,28 @@ import {
 } from 'react-native/Libraries/NewAppScreen';
 
 export default class redPocketApp extends Component {
+  constructor(props){
+    super(props);
+    this.state = {
+        timePassed: false,
+    };
+}
+
+componentDidMount() {
+    setTimeout( () => {
+        this.setTimePassed();
+    },2000);
+}
+
+setTimePassed() {
+    this.setState({timePassed: true});
+}
   render() {
-    return (
-      <WebView source={{ uri: 'https://www.redpocket.com/' }} />
-    );
+    if (!this.state.timePassed) {
+      return <SplashScreen/>;
+    } 
+    else {
+      return <WebView source={{ uri: 'https://www.redpocket.com/' }} />;
+    }
   }
 }
